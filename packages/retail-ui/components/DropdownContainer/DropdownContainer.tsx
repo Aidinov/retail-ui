@@ -86,8 +86,12 @@ export default class DropdownContainer extends React.Component<DropdownContainer
         bottom: bottom !== null ? bottom : undefined,
         left: left !== null ? left : undefined,
         right: right !== null ? right : undefined,
-        minWidth: this.state.minWidth,
+        width: this.props.width,
       };
+
+      if (typeof this.props.width === 'undefined') {
+        style.minWidth = this.state.minWidth;
+      }
     }
 
     const content = (
