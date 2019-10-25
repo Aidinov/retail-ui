@@ -170,6 +170,11 @@ storiesOf('ComboBox', module)
       renderItem={renderValue}
       renderAddButton={query => query && <MenuItem onClick={() => alert(query)}>Добавить {query}</MenuItem>}
     />
+  ))
+  .add('with fixed menu width', () => (
+    <div style={{ height: 90 }}>
+      <ComboBox menuWidth={200} value={{ label: 0 }} getItems={() => Promise.resolve([{ label: 0 }])} />
+    </div>
   ));
 
 interface ComboBoxWithErrorTogglerState {

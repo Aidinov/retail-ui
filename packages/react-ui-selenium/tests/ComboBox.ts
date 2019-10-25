@@ -404,4 +404,18 @@ describe('ComboBox', function() {
       await expect(await element.takeScreenshot()).to.matchImage('after tab to the next field');
     });
   });
+  describe('with fixed menu width', async function() {
+    it('small', async function() {
+      const element = await this.browser.findElement(By.css('#test-element'));
+
+      await this.browser
+        .actions({
+          bridge: true,
+        })
+        .click(this.browser.findElement(By.css('[class|="Input-module-root"]')))
+        .perform();
+
+      await expect(await element.takeScreenshot()).to.matchImage('after tab to the next field');
+    });
+  });
 });

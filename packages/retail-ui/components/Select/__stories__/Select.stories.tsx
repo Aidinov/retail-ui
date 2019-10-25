@@ -53,6 +53,11 @@ class SelectWithNull extends React.Component<any, any> {
 }
 
 storiesOf('Select', module)
+  .add('use link with icon', () => (
+    <div className="dropdown-test-container" style={{ height: 150, width: 240, padding: 4 }}>
+      <Select _icon={<AddIcon />} use="link" items={['one', 'two', 'three']} />{' '}
+    </div>
+  ))
   .addDecorator(story => (
     <div className="dropdown-test-container" style={{ height: 150, width: 200, padding: 4 }}>
       {story()}
@@ -62,7 +67,6 @@ storiesOf('Select', module)
   .add('Complex values', () => <SelectWrapper />)
   .add('With null', () => <SelectWithNull />)
   .add('use link', () => <Select use="link" items={['one', 'two', 'three']} />)
-  .add('use link with icon', () => <Select _icon={<AddIcon />} use="link" items={['one', 'two', 'three']} />)
   .add('with text overflow', () => <Select width="100px" items={['oneoneone', 'twotwotwo', 'twotwotwo']} />)
   .add('external focus', () => {
     class Sample extends React.Component {
