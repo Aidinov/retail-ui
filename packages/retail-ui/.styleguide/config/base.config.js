@@ -14,6 +14,27 @@ const styles = {
     '@global body': {
       fontFamily: '"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
       fontSize: 14,
+      position: 'relative',
+    },
+    '@global body::before': {
+      content: '""',
+      display: 'block',
+      position: 'absolute',
+      width: 15,
+      height: 15,
+      top: 0,
+      background: 'red',
+      zIndex: 1000,
+    },
+    '@global body::after': {
+      content: '""',
+      display: 'block',
+      position: 'absolute',
+      width: 15,
+      height: 15,
+      bottom: 0,
+      background: 'green',
+      zIndex: 1000,
     },
     '@font-face': {
       fontFamily: 'Segoe UI',

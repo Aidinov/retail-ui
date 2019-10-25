@@ -49,6 +49,7 @@ export default class DropdownContainer extends React.Component<DropdownContainer
   private getProps = createPropsGetter(DropdownContainer.defaultProps);
 
   private dom: DOMNode = null;
+  private offsetParent: HTMLElement | null = null;
   private layoutSub: Nullable<ReturnType<typeof LayoutEvents.addListener>>;
 
   public componentDidMount() {
@@ -57,14 +58,16 @@ export default class DropdownContainer extends React.Component<DropdownContainer
   }
 
   public componentWillMount() {
-    const { body, documentElement: docEl } = document;
-    const htmlPosition = getComputedStyle(docEl).position;
+    const { body, documentElement: html } = document;
+    const htmlPosition = getComputedStyle(html).position;
     const bodyPosition = getComputedStyle(body).position;
 
-    const hasLimitedHeightRoot = body.scrollHeight > body.clientHeight;
-    const hasStaticRoot = htmlPosition === 'static' && bodyPosition === 'static';
-
-    this.setState({ isDocumentElementRoot: hasLimitedHeightRoot || hasStaticRoot });
+    if (htmlPosition !== 'static') {
+      this.offsetParent = html;
+    }
+    if (bodyPosition !== 'static') {
+      this.offsetParent = body;
+    }
   }
 
   public componentWillUnmount() {
@@ -133,18 +136,26 @@ export default class DropdownContainer extends React.Component<DropdownContainer
       }
 
       const { offsetY = 0 } = this.props;
-      let bottom = null;
-      let top: number | null = targetRect.bottom + scrollY + offsetY;
+      const bottom = null;
+      let top: number | null = targetRect.bottom - this.getParentOffset() + scrollY + offsetY;
+      console.log(targetRect.bottom, this.getParentOffset(), scrollY, offsetY);
 
       const distanceToBottom = docEl.clientHeight - targetRect.bottom;
       const dropdownHeight = this.getHeight();
 
       if (distanceToBottom < dropdownHeight && targetRect.top > dropdownHeight) {
-        const clientHeight = this.state.isDocumentElementRoot ? docEl.clientHeight : body.scrollHeight;
-
-        top = null;
-        bottom = clientHeight + offsetY - scrollY - targetRect.top;
+        // const clientHeight = !this.offsetParent
+        //   ? docEl.clientHeight
+        //   : this.offsetParent === body
+        //     ? body.clientHeight
+        //     : docEl.offsetHeight - parseInt(getComputedStyle(docEl).borderBottomWidth!, 10);
+        // console.log(this.rootTarget, docEl, this.rootTarget === docEl);
+        // top = null;
+        top = targetRect.top - this.getParentOffset() - dropdownHeight - offsetY + scrollY;
+        // bottom = clientHeight + offsetY - scrollY - targetRect.top;
       }
+
+      console.log(top);
 
       const position = {
         top,
@@ -169,6 +180,16 @@ export default class DropdownContainer extends React.Component<DropdownContainer
       return 0;
     }
     return child.getBoundingClientRect().height;
+  };
+
+  private getParentOffset = (): number => {
+    if (!this.offsetParent) {
+      return 0;
+    }
+    const offset = this.offsetParent.parentElement
+      ? this.offsetParent.getBoundingClientRect().top - this.offsetParent.parentElement.getBoundingClientRect().top
+      : 0;
+    return offset + this.offsetParent.clientTop;
   };
 
   private getMinWidth = () => {

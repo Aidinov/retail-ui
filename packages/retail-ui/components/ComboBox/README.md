@@ -349,7 +349,7 @@ class ComboboxExample extends React.Component {
   getItems(q) {
     return Promise.resolve(
       this.state.items.filter(x => x.label.toLowerCase().includes(q.toLowerCase()) || x.value.toString(10) === q),
-    ).then(delay(500));
+    );
   }
 
   handleInputChange(query) {
