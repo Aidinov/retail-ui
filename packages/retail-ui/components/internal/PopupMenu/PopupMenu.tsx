@@ -13,6 +13,7 @@ import { Nullable } from '../../../typings/utility-types';
 import PopupMenuPositions from './PopupMenuPositions';
 import isValidPositions from './validatePositions';
 import styles from './PopupMenu.module.less';
+import { menuWidthDiff } from '../consts';
 
 export interface PopupMenuCaptionProps {
   opened: boolean;
@@ -107,7 +108,7 @@ export default class PopupMenu extends React.Component<PopupMenuProps, PopupMenu
                   hasShadow={false}
                   maxHeight={this.props.menuMaxHeight || 'none'}
                   onKeyDown={this.handleKeyDown}
-                  width={this.props.menuWidth || 'auto'}
+                  width={this.props.menuWidth || this.captionWrapper.offsetWidth + menuWidthDiff}
                   onItemClick={this.handleItemSelection}
                   cyclicSelection={false}
                   ref={this.refInternalMenu}

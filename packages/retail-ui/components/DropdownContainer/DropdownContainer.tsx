@@ -7,6 +7,7 @@ import RenderContainer from '../RenderContainer/RenderContainer';
 import ZIndex from '../ZIndex';
 import { createPropsGetter } from '../internal/createPropsGetter';
 import { Nullable } from '../../typings/utility-types';
+import { menuWidthDiff } from '../internal/consts';
 
 type DOMNode = Element | Text | null;
 
@@ -21,6 +22,8 @@ export interface DropdownContainerProps {
   align?: 'left' | 'right';
   getParent: () => DOMNode;
   children?: React.ReactNode;
+  deltaWidth: number;
+  width?: number | string;
   disablePortal?: boolean;
   offsetY?: number;
   offsetX?: number;
@@ -36,6 +39,7 @@ export default class DropdownContainer extends React.Component<DropdownContainer
   public static defaultProps = {
     align: 'left',
     disablePortal: false,
+    deltaWidth: menuWidthDiff,
     offsetX: 0,
     offsetY: -1,
   };
@@ -180,7 +184,7 @@ export default class DropdownContainer extends React.Component<DropdownContainer
     if (!this.isElement(target)) {
       return 0;
     }
-    return target.getBoundingClientRect().width;
+    return target.getBoundingClientRect().width + this.props.deltaWidth;
   };
 
   private convertToRelativePosition = (position: DropdownContainerPosition): DropdownContainerPosition => {
