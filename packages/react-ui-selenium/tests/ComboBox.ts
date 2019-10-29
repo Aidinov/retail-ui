@@ -409,10 +409,8 @@ describe('ComboBox', function() {
       const element = await this.browser.findElement(By.css('#test-element'));
 
       await this.browser
-        .actions({
-          bridge: true,
-        })
-        .click(this.browser.findElement(By.css('[class|="Input-module-root"]')))
+        .actions({ bridge: true })
+        .click(this.browser.findElement(By.css('[data-comp-name~="InputLikeText"]')))
         .perform();
 
       await expect(await element.takeScreenshot()).to.matchImage('after tab to the next field');
