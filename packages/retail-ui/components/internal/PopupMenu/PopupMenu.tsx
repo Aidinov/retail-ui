@@ -108,7 +108,9 @@ export default class PopupMenu extends React.Component<PopupMenuProps, PopupMenu
                   hasShadow={false}
                   maxHeight={this.props.menuMaxHeight || 'none'}
                   onKeyDown={this.handleKeyDown}
-                  width={this.props.menuWidth || this.captionWrapper.offsetWidth + menuWidthDiff}
+                  width={this.props.menuWidth || 'auto'}
+                  minWidth={this.captionWrapper.offsetWidth + menuWidthDiff}
+                  maxWidth={this.props.menuMaxWidth || '450px'}
                   onItemClick={this.handleItemSelection}
                   cyclicSelection={false}
                   ref={this.refInternalMenu}
