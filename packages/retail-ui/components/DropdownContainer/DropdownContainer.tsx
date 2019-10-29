@@ -7,7 +7,7 @@ import RenderContainer from '../RenderContainer/RenderContainer';
 import ZIndex from '../ZIndex';
 import { createPropsGetter } from '../internal/createPropsGetter';
 import { Nullable } from '../../typings/utility-types';
-import { menuWidthDiff } from '../internal/consts';
+import { menuWidthDiff } from '../internal/constants';
 
 type DOMNode = Element | Text | null;
 

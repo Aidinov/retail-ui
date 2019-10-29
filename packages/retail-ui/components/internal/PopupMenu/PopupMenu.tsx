@@ -13,7 +13,7 @@ import { Nullable } from '../../../typings/utility-types';
 import PopupMenuPositions from './PopupMenuPositions';
 import isValidPositions from './validatePositions';
 import styles from './PopupMenu.module.less';
-import { menuWidthDiff } from '../consts';
+import { menuWidthDiff } from '../constants';
 
 export interface PopupMenuCaptionProps {
   opened: boolean;
