@@ -13,9 +13,12 @@ export function Portal(props: PortalProps) {
 }
 
 export class RenderInnerContainer extends React.Component<RenderContainerNativeProps> {
+  private _allowedCreatePortal = false;
+  
   public componentDidMount() {
      this.allowedCreatePortal = true;
   }
+
   public render() {
     if (this.props.children) {
       if (!this.props.domContainer) {
